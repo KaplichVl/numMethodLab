@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Gauss.cpp" />
     <ClCompile Include="methodGaussa.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Gauss.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
