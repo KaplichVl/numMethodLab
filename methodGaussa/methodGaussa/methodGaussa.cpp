@@ -127,6 +127,8 @@ int main() {
 
     double error = searchError(res, res1);
     cout << "error : " << error;
+    for (int i = 1; i > 0; i++)
+        cout << "i";
  
     return 0;
 }
