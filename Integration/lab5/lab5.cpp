@@ -6,9 +6,9 @@ int main()
 {
     double a = 1.01,
            b = 2.631;
-   cout << "trapeze " << solveMethodSimpson(a,b) << endl;
+   cout << "Simpson " << solveMethodSimpson(a,b) << endl;
 
-   cout << "Simpson " << solveMethodTrapezoid(a,b) << endl;
+   cout << "trapeze " << solveMethodTrapezoid(a,b) << endl;
    
    a = 0;
    b = 4;

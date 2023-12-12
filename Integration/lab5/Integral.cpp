@@ -23,14 +23,14 @@ double methodTrapezoid(double a, double b, int n)
 
 	return sum;
 }
-double solveMethodTrapezoid(int a,int b) {
-   int integral1 = 0,
-       integral2 = 0,
-       n = 1;
+double solveMethodTrapezoid(double a,double b) {
+	double integral1 = 0,
+		integral2 = 0;
+	int n = 100;
     do {
         integral1 = methodTrapezoid(a, b, n);
         integral2 = methodTrapezoid(a, b, 2 * n);
-        n <<= 1;
+        n *= 2;
     } while (!rungeCriterion(integral1, integral2, 3));
 
     return integral2;
@@ -40,23 +40,23 @@ double methodSimpson(double a, double b, int n)
 {
 	double h = (b - a) / n; 
 	double sum = func(a) + func(b);
-
+	double x = 0;
 	for (int i = 1; i < n; i++) {
-		double x = a + i * h;
-		sum += (i % 2 == 0) ? 2 * func(x) : 4 * func(x); 
+	    x = a + i * h;
+		
+	sum += (i % 2 == 0) ? 2 * func(x) : 4 * func(x); 
 	}
-
 	return (h / 3) * sum;
 }
-double solveMethodSimpson(int a, int b) {
-    int integral1 = 0,
-        integral2 = 0,
-        n = 1;
+double solveMethodSimpson(double a, double b) {
+	double integral1 = 0,
+		integral2 = 0;
+	int  n = 200;
     do {
-        integral1 = methodSimpson(a, b, n);
-        integral2 = methodSimpson(a, b, 2 * n);
-        n <<= 1;
-    } while (!rungeCriterion(integral1, integral2, 15));
+		integral1 = methodSimpson(a, b, n);
+        integral2 = methodSimpson(a, b,2 * n);
+        n <<= 2;
+    } while (rungeCriterion(integral1, integral2, 15));
     return integral2;
 }
 
