@@ -1,4 +1,5 @@
 #include "Integral.h"
+#include <iostream>
 
 double func(double x)
 {
@@ -22,6 +23,18 @@ double methodTrapezoid(double a, double b, int n)
 
 	return sum;
 }
+double solveMethodTrapezoid(int a,int b) {
+   int integral1 = 0,
+       integral2 = 0,
+       n = 1;
+    do {
+        integral1 = methodTrapezoid(a, b, n);
+        integral2 = methodTrapezoid(a, b, 2 * n);
+        n <<= 1;
+    } while (!rungeCriterion(integral1, integral2, 3));
+
+    return integral2;
+}
 
 double methodSimpson(double a, double b, int n)
 {
@@ -35,47 +48,45 @@ double methodSimpson(double a, double b, int n)
 
 	return (h / 3) * sum;
 }
+double solveMethodSimpson(int a, int b) {
+    int integral1 = 0,
+        integral2 = 0,
+        n = 1;
+    do {
+        integral1 = methodSimpson(a, b, n);
+        integral2 = methodSimpson(a, b, 2 * n);
+        n <<= 1;
+    } while (!rungeCriterion(integral1, integral2, 15));
+    return integral2;
+}
 
 double methodSimpson(double a, double b, double c, double d, int nx, int ny)
 {
-    double hx = (b - a) / (nx << 1);
-    double hy = (d - c) / (ny << 1);
+
+    double hx = (b - a) / nx / 2;
+    double hy = (d - c) / ny / 2;
     double sum = 0.0;
+	for (int i = 0; i <= nx - 1; i++) {
+		for (int j = 0; j <= ny - 1; j++) {
+			int i2 = i << 1, j2 = j << 1;
+			sum += funcXYSipmson(hx,hy,a,c,i2,j2) + 4 * funcXYSipmson(hx, hy, a, c, i2 + 1, j2) + funcXYSipmson(hx, hy, a, c, i2 + 2, j2);
+			sum += 4 * funcXYSipmson(hx, hy, a, c, i2, j2 + 1) + 16 * funcXYSipmson(hx, hy, a, c, i2 + 1, j2 + 1) + 4 * funcXYSipmson(hx, hy, a, c, i2 + 2, j2 + 1);
+			sum += funcXYSipmson(hx, hy, a, c, i2, j2 + 2) + 4 * funcXYSipmson(hx, hy, a, c, i2 + 1, j2 + 2) + funcXYSipmson(hx, hy, a, c, i2 + 2, j2 + 2);
+		}
+	}
 
-    for (int i = 0; i <= nx << 1; i++) {
-        for (int j = 0; j <= ny << 1; j++) {
-            double x = a + i * hx;
-            double y = c + j * hy;
-
-            int coeff = 1;
-
-            if (i == 0 || i == nx << 1);
-           
-            else if (i % 2 == 1)
-                coeff <<= 2;
-
-            else
-                coeff <<= 1;
-
-            if (j == 0 || j == ny << 1);
-     
-            else if (j % 2 == 1)
-                coeff <<= 2;
-
-            else
-                coeff <<= 1;
-
-            sum += (double) coeff * func(x, y);
-        }
-    }
-
-    
-    return sum * hx * hy / 9;
+   
+    return sum * hx * hy / 9.;
 }
 
-bool rungeCriterion(double integral1, double integral2)
+double funcXYSipmson(double h1, double h2, double a, double b, int i, int j)
 {
-	return abs(integral1 - integral2) < 3 * eps;
+    return func(a+h1*i,b+h2*j);
+}
+
+bool rungeCriterion(double integral1, double integral2,int cnt)
+{
+	return abs(integral1 - integral2) < cnt * eps;
 }
 
 
