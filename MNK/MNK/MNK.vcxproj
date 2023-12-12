@@ -128,10 +128,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ldl.cpp" />
     <ClCompile Include="MNK.cpp" />
     <ClCompile Include="NK.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ldl.h" />
     <ClInclude Include="NK.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
