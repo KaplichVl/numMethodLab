@@ -21,9 +21,15 @@
     <ClCompile Include="Newton.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="gauss.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Newton.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="gauss.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

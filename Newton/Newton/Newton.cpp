@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include "Newton.h"
+#include "gauss.h"
 
 
 
@@ -29,50 +30,7 @@ vector<vector<double>> jacobi(double x1,double x2, double M)
     return J;
 }
 
-vector<double> gauss(vector<vector<double>> a, vector<double> y)
-{
-	int n = y.size();
-    vector<double> c(0);
-    vector<double> x(n);
-    double max;
-    int k, index;
-    k = 0;
-    while (k < n) {
-        max = a[k][k];
-        index = k;
-        for (int i = k + 1; i < n; i++) {
-            if (a[i][k] > max) {
-                max = a[i][k];
-                index = i;
-            }
-        }
-        if (k != index) {
-            swap(a[k], a[index]);
-            swap(y[k], y[index]);
-        }
-
-        for (int i = k; i < n; i++) {
-            double temp = a[i][k];
-            for (int j = 0; j < n; j++)
-                a[i][j] /= temp;
-            y[i] /= temp;
-            if (i == k)  continue;
-            for (int j = 0; j < n; j++)
-                a[i][j] -= a[k][j];
-            y[i] -= y[k];
-        }
-        k++;
-    }
-
-    for (k = n - 1; k >= 0; k--) {
-        x[k] = y[k];
-        for (int i = 0; i < k; i++)
-            y[i] = y[i] - a[i][k] * x[k];
-    }
-    return x;
-}
-
-vector<double> newtonMethod(vector <double> x1)
+vector<double> newtonMethod(vector <double> x1,int NIT)
 {
         vector <double> dx{};
         int cnt = 0 ,n = x1.size();
@@ -105,7 +63,10 @@ vector<double> newtonMethod(vector <double> x1)
     
             cnt++;
             cout << cnt << setw(20) << delta_1 << setw(16)  << delta_2 << endl;
-        } while (abs(delta_1) > epsilon || abs(delta_2) > epsilon);
+            if (cnt > NIT)
+                exit(1);
+
+        } while (delta_1 >= epsilon || delta_2 >= epsilon);
     
        
         return x1;
@@ -143,18 +104,10 @@ vector<double> newtonMethod(vector <double> x1, int NIT, double M) {
        if (iter > NIT)
            exit(1);
 
-    } while (delta_1 > epsilon && delta_2 > epsilon);
+    } while (delta_1 >= epsilon || delta_2 >= epsilon);
 
 
        return x1;
 }
 
 
-
-void printRes(const vector<double>& res)
-{
-	cout << "Resolution : " << endl;
-	    for (double elem : res)
-	        cout << elem << " ";
-       
-}
